@@ -1,0 +1,6 @@
+{
+    "name": "trench-bot-frontend-app",
+    "version": "1.0.0",
+    "description": "Static frontend for Trench Bot verification",
+    "private": true
+  }
