@@ -1,5 +1,5 @@
 const LOCAL_BACKEND_API_URL = "https://eb14-46-188-232-42.ngrok-free.app/api/v1/verify-nft";
-const PRODUCTION_BACKEND_API_URL = "https://YOUR_RAILWAY_BACKEND_URL_HERE/api/v1/verify-nft";
+const PRODUCTION_BACKEND_API_URL = "trench-bot-frontend-app.railway.internal/api/v1/verify-nft";
 
 let determinedBackendApiUrl;
 const hostname = window.location.hostname;
