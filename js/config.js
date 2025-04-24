@@ -2,22 +2,25 @@
 
 // --- Configuration Settings ---
 
-// !!! IMPORTANT: Set this to the ACTUAL PUBLIC HTTPS URL of your deployed Go backend API endpoint !!!
-// Example: "https://your-backend-service-name.up.railway.app/api/v1/verify-nft"
-const PRODUCTION_BACKEND_API_URL = "https://trench-bot-updated-production.up.railway.app/api/v1/verify-nft"; // <-- REPLACE THIS WITH YOUR ACTUAL URL
+// !!! Set this to the ACTUAL PUBLIC HTTPS URL of your deployed Go backend API endpoint for verification !!!
+const PRODUCTION_BACKEND_API_URL = "https://trench-bot-updated-production.up.railway.app/api/v1/verify-nft"; // <-- CORRECTED URL
 
 // Solana Network ('mainnet-beta' or 'devnet')
-const SOLANA_NETWORK_NAME = solanaWalletAdapterBase.WalletAdapterNetwork.MainnetBeta;
+// Keep using WalletAdapterNetwork if possible, otherwise fallback to string
+const SOLANA_NETWORK_NAME = (typeof solanaWalletAdapterBase !== 'undefined' && solanaWalletAdapterBase.WalletAdapterNetwork)
+                             ? solanaWalletAdapterBase.WalletAdapterNetwork.MainnetBeta
+                             : 'mainnet-beta'; // Fallback string if library isn't loaded yet
 
 // --- End Configuration ---
 
-// Check if the URL is still a placeholder (important safety check!)
-if (PRODUCTION_BACKEND_API_URL.includes("YOUR_") || PRODUCTION_BACKEND_API_URL.includes("_HERE") || PRODUCTION_BACKEND_API_URL.includes("-xxxx")) {
-     console.error("!!! Production Backend API URL has not been configured correctly in config.js !!!");
-     alert("Configuration Error: Backend API URL is not set. Please contact the administrator."); // Alert user
+// Safety check (optional but good)
+if (!PRODUCTION_BACKEND_API_URL || !PRODUCTION_BACKEND_API_URL.startsWith("https://")) {
+     console.error("!!! Production Backend API URL is missing, invalid, or not HTTPS in config.js !!!");
+     // You might want to prevent the app from initializing fully here
+     // alert("Configuration Error: Backend API URL is invalid. Please contact the administrator.");
 }
 
-// Expose configuration globally, always using the production URL
+// Expose configuration globally
 window.APP_CONFIG = {
     backendApiUrl: PRODUCTION_BACKEND_API_URL,
     solanaNetwork: SOLANA_NETWORK_NAME
